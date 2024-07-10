@@ -8,7 +8,7 @@ public class MainPageUIManager : MonoBehaviour
     [SerializeField] private Slider pollutionSlider;
     [SerializeField] private Slider satisfactionSlider;
     [SerializeField] private TextMeshProUGUI incomeText;
-    [SerializeField] private TextMeshProUGUI monthText;
+    [SerializeField] private Text monthText;
     [SerializeField] private Button nextDayButton;
 
     public static float playerIncome;
@@ -43,7 +43,7 @@ public class MainPageUIManager : MonoBehaviour
         pollutionSlider.value = pollutionPercentage;
         satisfactionSlider.value = bossSatisfaction;
         incomeText.text = $"Income: ${playerIncome}";
-        monthText.text = $"Month: {currentMonth}";
+        monthText.text = currentMonth.ToString();
     }
 
     private void UpdateData()

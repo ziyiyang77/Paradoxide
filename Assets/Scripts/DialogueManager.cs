@@ -109,11 +109,11 @@ public class DialogueManager : MonoBehaviour
     Vector3 CalculateButtonPosition(int totalChoices, int index)
     {
         // Calculate the step in y based on the total height (radius * 2)
-        float totalHeight = 400.0f * 2; // The diameter of the circle
+        float totalHeight = 600.0f * 2; // The diameter of the circle
         float yStep = totalHeight / (totalChoices + 1); // Plus 1 to leave space at the top and bottom
 
         // Calculate the y position for the current button
-        float y = -400.0f + ((index + 1) * yStep);
+        float y = -600.0f + ((index + 1) * yStep);
 
         // Calculate the corresponding x position to maintain the arc
         float x = Mathf.Sqrt(400.0f * 400.0f - y * y);
