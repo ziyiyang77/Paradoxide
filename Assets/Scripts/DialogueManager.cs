@@ -9,9 +9,25 @@ public class DialogueManager : MonoBehaviour
 
     void Awake()
     {
+        // Load the correct Ink JSON asset based on the current month
+        LoadInkJSONAsset();
+
         // Remove the default message
         RemoveChildren();
         StartStory();
+    }
+
+    // Loads the correct Ink JSON asset based on the current month
+    void LoadInkJSONAsset()
+    {
+        int currentMonth = GameDataManager.instance.gameData.currentMonth;
+        string fileName = $"window_text{currentMonth}";
+        inkJSONAsset = Resources.Load<TextAsset>($"Text/{fileName}");
+
+        if (inkJSONAsset == null)
+        {
+            Debug.LogError($"Failed to load Ink JSON asset: {fileName}");
+        }
     }
 
     // Creates a new Story object with the compiled story which we can then play!

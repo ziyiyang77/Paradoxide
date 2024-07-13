@@ -40,16 +40,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Game Over");
     }
 
-    // Add methods to increase/decrease income and pollution
-    public void IncreaseIncome(float amount)
-    {
-        gameData.IncreaseIncome(amount);
-    }
-
-    public void DecreaseIncome(float amount)
-    {
-        gameData.DecreaseIncome(amount);
-    }
 
     public void IncreasePollution(float amount)
     {

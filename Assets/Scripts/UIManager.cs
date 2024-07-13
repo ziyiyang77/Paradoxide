@@ -14,7 +14,6 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         // Update UI elements with current game data
-        incomeText.text = "Income: " + GameManager.instance.gameData.playerIncome;
         pollutionText.text = "Pollution: " + GameManager.instance.gameData.pollutionPercentage + "%";
         monthText.text = "Month: " + GameManager.instance.gameData.currentMonth;
     }

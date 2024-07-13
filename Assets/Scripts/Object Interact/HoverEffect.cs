@@ -31,7 +31,7 @@ public class HoverEffect : MonoBehaviour
                 if (spriteRenderer.color.a < 1)
                 {
                     Color color = spriteRenderer.color;
-                    color.a = Mathf.Min(spriteRenderer.color.a + fadeSpeed * Time.deltaTime, 1);
+                    color.a = Mathf.Min(spriteRenderer.color.a + fadeSpeed * Time.deltaTime, 0.5f);
                     spriteRenderer.color = color;
                 }
             }

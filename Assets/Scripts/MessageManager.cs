@@ -5,79 +5,168 @@ using UnityEngine.UI;
 
 public class MessageManager : MonoBehaviour
 {
-    public GameObject messagePrefab;
-    public Transform contentTransform;
-    public Button nextMonthButton;
-    private List<Message> messages = new List<Message>();
-    private bool firstTimeClick = true;
+    public GameObject messagePrefab; // Reference to the message prefab
+    public Transform contentTransform; // Reference to the Content GameObject's Transform
+    public List<string> highSatisfactionBossMessages;
+    public List<string> midSatisfactionBossMessages;
+    public List<string> lowSatisfactionBossMessages;
+    public List<string> highEnvironmentKidMessages;
+    public List<string> midEnvironmentKidMessages;
+    public List<string> lowEnvironmentKidMessages;
+    public static bool firstTimeClick = true;
+    public static int bossSatisfaction;
+    public static int environmentLevel;
+    private static List<Message> messagesToDisplay = new List<Message>();
 
     void Start()
     {
-        nextMonthButton.onClick.AddListener(OnNextMonth);
-        LoadMessages();
-    }
+        //DontDestroyOnLoad(gameObject);
 
-    void LoadMessages()
-    {
         if (firstTimeClick)
         {
-            StartCoroutine(DisplayMessages());
-            firstTimeClick = false;
+            InitializeMessages();
         }
         else
         {
-            foreach (var msg in messages)
-            {
-                CreateMessage(msg);
-            }
+            DisplayExistingMessages();
         }
     }
 
-    IEnumerator DisplayMessages()
+    public void InitializeMessages()
     {
-        foreach (var msg in messages)
+        messagesToDisplay.Clear();
+
+        // Determine Boss message
+        if (bossSatisfaction > 0)
         {
-            CreateMessage(msg);
+            messagesToDisplay.Add(new Message("Boss", GetRandomMessage(highSatisfactionBossMessages)));
+        }
+        else if (bossSatisfaction == 0)
+        {
+            messagesToDisplay.Add(new Message("Boss", GetRandomMessage(midSatisfactionBossMessages)));
+        }
+        else
+        {
+            messagesToDisplay.Add(new Message("Boss", GetRandomMessage(lowSatisfactionBossMessages)));
+        }
+
+        // Determine Kid message
+        if (environmentLevel > 0)
+        {
+            messagesToDisplay.Add(new Message("Kid", GetRandomMessage(highEnvironmentKidMessages)));
+        }
+        else if (environmentLevel == 0)
+        {
+            messagesToDisplay.Add(new Message("Kid", GetRandomMessage(midEnvironmentKidMessages)));
+        }
+        else
+        {
+            messagesToDisplay.Add(new Message("Kid", GetRandomMessage(lowEnvironmentKidMessages)));
+        }
+
+        // Display messages
+        StartCoroutine(DisplayMessages(messagesToDisplay));
+        firstTimeClick = false;
+    }
+
+    public void DisplayExistingMessages()
+    {
+        for (int i = 0; i < messagesToDisplay.Count; i++)
+        {
+            var msg = messagesToDisplay[i];
+            bool isLastMessage = (i == messagesToDisplay.Count - 1);
+            CreateMessage(msg, isLastMessage);
+        }
+    }
+
+    IEnumerator DisplayMessages(List<Message> messages)
+    {
+        for (int i = 0; i < messages.Count; i++)
+        {
+            var msg = messages[i];
+            bool isLastMessage = (i == messages.Count - 1);
+            CreateMessage(msg, isLastMessage);
             yield return new WaitForSeconds(1); // Adjust delay as needed
         }
     }
 
-    void CreateMessage(Message msg)
+    void CreateMessage(Message msg, bool isLastMessage)
     {
         GameObject newMessage = Instantiate(messagePrefab, contentTransform);
-        newMessage.transform.Find("NameText").GetComponent<Text>().text = msg.name;
-        newMessage.transform.Find("MessageText").GetComponent<Text>().text = msg.text;
+        newMessage.transform.Find("Name").GetComponent<Text>().text = msg.name;
+        newMessage.transform.Find("Text").GetComponent<Text>().text = msg.text;
         newMessage.transform.SetAsLastSibling();
-        AdjustMessagesPosition();
-    }
 
-    void AdjustMessagesPosition()
-    {
-        for (int i = 0; i < contentTransform.childCount; i++)
+        if (firstTimeClick)
         {
-            Transform message = contentTransform.GetChild(i);
-            message.localPosition = new Vector3(0, -i * 100, 0); // Adjust the spacing as needed
+            if (isLastMessage)
+            {
+                PositionLastMessage(newMessage);
+            }
+            else
+            {
+                StartCoroutine(AnimateMessages(newMessage));
+            }
+        }
+        else
+        {
+            PositionMessage(newMessage, isLastMessage);
         }
     }
 
-    void OnNextMonth()
+    void PositionLastMessage(GameObject newMessage)
     {
-        UpdateMessagesForNewMonth();
-        RefreshPhoneScene();
+        newMessage.transform.localPosition = new Vector3(0, 0, 0); // Position it at the bottom
     }
 
-    void UpdateMessagesForNewMonth()
+    void PositionMessage(GameObject newMessage, bool isLastMessage)
     {
-        // Update your messages list here based on the new month.
+        if (isLastMessage)
+        {
+            newMessage.transform.localPosition = new Vector3(0, 0, 0); // Position it at the bottom
+        }
+        else
+        {
+            newMessage.transform.localPosition = new Vector3(0, 300, 0); // Position it 300 units up
+        }
     }
 
-    void RefreshPhoneScene()
+    IEnumerator AnimateMessages(GameObject newMessage)
+    {
+        float animationDuration = 0.5f; // Duration of the animation
+        float elapsedTime = 0f; // Time elapsed since the start of the animation
+
+        Vector3 newMessageStartPos = new Vector3(0, 0, 0); // Starting position at the bottom
+        Vector3 newMessageEndPos = new Vector3(newMessageStartPos.x, newMessageStartPos.y + 300, newMessageStartPos.z); // Target position 300 units up
+
+        newMessage.transform.localPosition = newMessageStartPos; // Set the new message's initial position
+
+        // Animation loop
+        while (elapsedTime < animationDuration)
+        {
+            newMessage.transform.localPosition = Vector3.Lerp(newMessageStartPos, newMessageEndPos, elapsedTime / animationDuration); // Move the new message up
+
+            elapsedTime += Time.deltaTime; // Increment elapsed time
+            yield return null; // Wait for the next frame
+        }
+
+        // Final adjustment to ensure position is correct
+        newMessage.transform.localPosition = newMessageEndPos;
+    }
+
+    string GetRandomMessage(List<string> messages)
+    {
+        int index = Random.Range(0, messages.Count);
+        return messages[index];
+    }
+
+    public void RefreshPhoneScene()
     {
         foreach (Transform child in contentTransform)
         {
             Destroy(child.gameObject);
         }
-        LoadMessages();
+        firstTimeClick = true; // Set firstTimeClick to true when refreshing
     }
 }
 
@@ -86,4 +175,10 @@ public class Message
 {
     public string name;
     public string text;
+
+    public Message(string name, string text)
+    {
+        this.name = name;
+        this.text = text;
+    }
 }

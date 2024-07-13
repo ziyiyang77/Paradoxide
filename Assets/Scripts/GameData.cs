@@ -3,28 +3,15 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public float playerIncome;
     public float pollutionPercentage;
     public float bossSatisfaction;
     public int currentMonth;
 
     public GameData()
     {
-        playerIncome = 1000.0f;
-        pollutionPercentage = 50.0f;
-        bossSatisfaction = 30.0f;
+        pollutionPercentage = 5.0f;
+        bossSatisfaction = 5.0f;
         currentMonth = 1;
-    }
-
-    // Methods to update income and pollution
-    public void IncreaseIncome(float amount)
-    {
-        playerIncome += amount;
-    }
-
-    public void DecreaseIncome(float amount)
-    {
-        playerIncome -= amount;
     }
 
     public void IncreasePollution(float amount)

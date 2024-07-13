@@ -26,4 +26,9 @@ public class ChangeScene : MonoBehaviour
             }
         }
     }
+
+    public void SwitchScene()
+    {
+        SceneManager.LoadScene(sceneToLoad);
+    }
 }
