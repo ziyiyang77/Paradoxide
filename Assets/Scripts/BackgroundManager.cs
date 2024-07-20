@@ -20,11 +20,11 @@ public class BackgroundManager : MonoBehaviour
     {
         float pollution = gameDataForUI.pollutionPercentage;
 
-        if (pollution < 3)
+        if (pollution < 5)
         {
             spriteRenderer.sprite = backgroundHighPollution;
         }
-        else if (pollution >= 3 && pollution < 7)
+        else if (pollution >= 5 && pollution < 7)
         {
             spriteRenderer.sprite = backgroundMediumPollution;
         }

@@ -71,13 +71,12 @@ public class MainPageUIManager : MonoBehaviour
 
         if (data.bossSatisfaction < 2)
         {
-            SceneTransitionManager.instance.FadeAndLoadScene("BE1");
+            SceneTransitionManager.instance.FadeAndLoadScene("BE2");
             
         }
         else if (data.pollutionPercentage < 2)
         {
-            SceneTransitionManager.instance.FadeAndLoadScene("BE2");
-            Debug.Log("BE2 triggered.");
+            SceneTransitionManager.instance.FadeAndLoadScene("BE1");
         }
         else
         {

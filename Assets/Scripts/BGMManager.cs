@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BGMManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class BGMManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded; // Add listener for scene load
         }
         else
         {
@@ -25,19 +27,32 @@ public class BGMManager : MonoBehaviour
         }
     }
 
-    void Start()
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded; // Remove listener when destroyed
+    }
+
+    private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         gameData = GameDataManager.instance.gameDataForUI;
         UpdateBGM();
     }
 
-    void Update()
+    private void Update()
     {
         UpdateBGM();
     }
 
-    void UpdateBGM()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "BE1" || scene.name == "BE2" || scene.name == "End")
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void UpdateBGM()
     {
         int currentMonth = gameData.currentMonth;
 

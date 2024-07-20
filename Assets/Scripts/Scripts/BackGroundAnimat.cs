@@ -13,6 +13,7 @@ public class BackgroundAnimation : MonoBehaviour
     public AudioSource audioSource; // AudioPlayer
     public VideoPlayer videoPlayer; // VideoPlayer
     public string sceneToLoadAfterVideo; // new game scene name here
+    public GameObject SkipButton;
 
     [System.Serializable]
     public class ButtonConfig
@@ -34,6 +35,7 @@ public class BackgroundAnimation : MonoBehaviour
         image = GetComponent<Image>();
         currentFrames = frames1; // initialization
         specialButton.onClick.AddListener(RequestSwitchAnimation); // button listener
+        specialButton.onClick.AddListener(EnableSkipButton);
 
         // button listener
         foreach (ButtonConfig config in buttonConfigs)
@@ -42,12 +44,13 @@ public class BackgroundAnimation : MonoBehaviour
         }
 
         videoPlayer.loopPointReached += OnVideoEnd; // loop end
+        SkipButton.SetActive(false);
     }
 
     void Update()
     {
         if (secondAnimationFinished)
-            return; // 如果第二组动画已经播放完，停止更新
+            return; // ??????????????????????????????????
 
         timer += Time.deltaTime;
         if (timer >= 1f / framesPerSecond)
@@ -94,7 +97,7 @@ public class BackgroundAnimation : MonoBehaviour
     {
         // after second animation played
         audioSource.Stop();
-        image.enabled = false; // 隐藏图像
+        image.enabled = false; // ????????
         videoPlayer.gameObject.SetActive(true);
         videoPlayer.Play();
     }
@@ -103,5 +106,10 @@ public class BackgroundAnimation : MonoBehaviour
     {
         // switch scene
         SceneManager.LoadScene(sceneToLoadAfterVideo);
+    }
+
+    void EnableSkipButton()
+    {
+        SkipButton.SetActive(true);
     }
 }
