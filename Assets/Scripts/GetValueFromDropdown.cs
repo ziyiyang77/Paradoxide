@@ -49,10 +49,10 @@ public class GetValueFromDropdown : MonoBehaviour
         {
             switch (pickedEntries[i])
             {
-                case 0:
+                case 1:
                     choiceBias -= 1;
                     break;
-                case 2:
+                case 3:
                     choiceBias += 1;
                     break;
                     // case 1 does nothing

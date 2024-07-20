@@ -72,36 +72,44 @@ public class MainPageUIManager : MonoBehaviour
         if (data.bossSatisfaction < 2)
         {
             SceneTransitionManager.instance.FadeAndLoadScene("BE1");
+            
         }
         else if (data.pollutionPercentage < 2)
         {
             SceneTransitionManager.instance.FadeAndLoadScene("BE2");
+            Debug.Log("BE2 triggered.");
         }
-
-        // Fade to black
-        SceneTransitionManager.instance.FadeAndLoadScene("Main");
-
-        // Update game data
-        data.AdvanceMonth();
-
-        if (data.IsGameOver())
+        else
         {
-            SceneTransitionManager.instance.FadeAndLoadScene("End");
+            // Fade to black
+            SceneTransitionManager.instance.FadeAndLoadScene("Main");
+
+            // Update game data
+            data.AdvanceMonth();
+
+            if (data.IsGameOver())
+            {
+                SceneTransitionManager.instance.FadeAndLoadScene("End");
+            }
+            // Simulate some delay
+            //yield return new WaitForSeconds(1.0f);
+
+            // Update the UI after returning from the computer scene
+            UpdateUI();
+            UpdateData();
+
+            // Optionally disable the button again
+            nextDayButton.interactable = false;
+
+            GameDataManager.instance.UpdateUIData();
+
+            // Reset GameStateManager flag
+            GameStateManager.instance.hasSubmitted = false;
+            Debug.Log("submit false");
+
         }
-        // Simulate some delay
-        //yield return new WaitForSeconds(1.0f);
 
-        // Update the UI after returning from the computer scene
-        UpdateUI();
-        UpdateData();
 
-        // Optionally disable the button again
-        nextDayButton.interactable = false;
 
-        // Reset GameStateManager flag
-        GameStateManager.instance.hasSubmitted = false;
-        Debug.Log("submit false");
-
-        
     }
 }
