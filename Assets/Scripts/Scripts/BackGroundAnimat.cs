@@ -15,6 +15,8 @@ public class BackgroundAnimation : MonoBehaviour
     public string sceneToLoadAfterVideo; // new game scene name here
     public GameObject SkipButton;
 
+    [SerializeField] string videoName;
+
     [System.Serializable]
     public class ButtonConfig
     {
@@ -45,6 +47,13 @@ public class BackgroundAnimation : MonoBehaviour
 
         videoPlayer.loopPointReached += OnVideoEnd; // loop end
         SkipButton.SetActive(false);
+
+        if (videoPlayer)
+        {
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoName);
+            videoPlayer.url = videoPath;
+
+        }
     }
 
     void Update()

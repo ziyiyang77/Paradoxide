@@ -885,13 +885,14 @@ MonoBehaviour:
   - button: {fileID: 832907751}
     sceneName: PlaceHolder2_for_Resume
   - button: {fileID: 677292288}
-    sceneName: PlaceHolder3_for_Credit
+    sceneName: Credit
   - button: {fileID: 1401275970}
     sceneName: PlaceHolder4_for_Achievement
   audioSource: {fileID: 525734392}
   videoPlayer: {fileID: 525734393}
   sceneToLoadAfterVideo: Tutorial1
   SkipButton: {fileID: 1492260100}
+  videoName: OpenVideo.mp4
 --- !u!114 &525734390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1044,7 +1045,7 @@ VideoPlayer:
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 0
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 1
@@ -1152,7 +1153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -85.994385, y: -2645}
+  m_AnchoredPosition: {x: -85.994385, y: -1320}
   m_SizeDelta: {x: 950.9346, y: 416.68884}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &677292287
@@ -1627,7 +1628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -85.99426, y: -262}
+  m_AnchoredPosition: {x: -85.99426, y: -100}
   m_SizeDelta: {x: 950.9346, y: 416.68884}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &1079514588
@@ -2746,8 +2747,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Credit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 29757ed5118a2453b9a57c76689330e8, type: 2}
+  m_sharedMaterial: {fileID: 5783990532406420326, guid: 29757ed5118a2453b9a57c76689330e8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

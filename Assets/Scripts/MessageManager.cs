@@ -106,6 +106,8 @@ public class MessageManager : MonoBehaviour
             bool isLastMessage = (i == messagesToDisplay.Count - 1);
             CreateMessage(msg, isLastMessage);
         }
+        animationsComplete = true;
+        EnableHoverFunctionality();
     }
 
     IEnumerator DisplayMessages(List<Message> messages)

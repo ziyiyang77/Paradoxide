@@ -38,6 +38,7 @@ public class MainPageUIManager : MonoBehaviour
 
     private void UpdateUI()
     {
+        Debug.Log("update UI");
         pollutionSlider.value = pollutionPercentage;
         satisfactionSlider.value = bossSatisfaction;
         monthText.text = currentMonth.ToString();
@@ -45,6 +46,7 @@ public class MainPageUIManager : MonoBehaviour
 
     private void UpdateData()
     {
+        Debug.Log("update data");
         GameData data = GameDataManager.instance.gameData;
 
         pollutionPercentage = data.pollutionPercentage / 10f;
